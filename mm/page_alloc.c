@@ -365,7 +365,12 @@ int user_min_free_kbytes = -1;
  */
 int watermark_boost_factor __read_mostly;
 #else
-int watermark_boost_factor __read_mostly = 10000;
+/*
+ * Off: on a 4 GB phone with zram, a boost after each fragmentation event
+ * wakes kswapd to reclaim far past the high watermark, compressing pages
+ * into zram mid-game and stuttering. vm.watermark_boost_factor re-enables.
+ */
+int watermark_boost_factor __read_mostly;
 #endif
 int watermark_scale_factor = 20;
 
