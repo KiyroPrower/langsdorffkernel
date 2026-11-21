@@ -1807,7 +1807,8 @@ static const struct seq_operations vmstat_op = {
 
 #ifdef CONFIG_SMP
 static DEFINE_PER_CPU(struct delayed_work, vmstat_work);
-int sysctl_stat_interval __read_mostly = HZ;
+/* 10 s: fold per-CPU counters less often, fewer timer wakeups on 8 cores */
+int sysctl_stat_interval __read_mostly = 10 * HZ;
 
 #ifdef CONFIG_PROC_FS
 static void refresh_vm_stats(struct work_struct *work)
