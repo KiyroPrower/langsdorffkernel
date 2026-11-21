@@ -110,7 +110,10 @@ enum {
  * (can be overridden by platform header).
  */
 #ifndef DEFAULT_PM_POWEROFF_TICK_SHADER
-#define DEFAULT_PM_POWEROFF_TICK_SHADER (2) /* 400-800us */
+/* 8 ticks (3.2 ms): keep the single G52 core powered across gaps between
+ * jobs of one frame instead of power-cycling it several times per frame.
+ */
+#define DEFAULT_PM_POWEROFF_TICK_SHADER (8) /* 2.8-3.2ms */
 #endif
 
 /* Default scheduling tick granuality (can be overridden by platform header) */
