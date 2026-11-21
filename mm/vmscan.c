@@ -4244,8 +4244,12 @@ static bool age_lruvec(struct lruvec *lruvec, struct scan_control *sc, unsigned 
 	return true;
 }
 
-/* to protect the working set of the last N jiffies */
-static unsigned long lru_gen_min_ttl __read_mostly;
+/*
+ * to protect the working set of the last N jiffies
+ * Default 1 s (HZ jiffies): on a 4 GB phone this OOM-kills a background
+ * app instead of thrashing into a hard freeze. 0 via min_ttl_ms disables.
+ */
+static unsigned long lru_gen_min_ttl __read_mostly = HZ;
 
 static void lru_gen_age_node(struct pglist_data *pgdat, struct scan_control *sc)
 {
