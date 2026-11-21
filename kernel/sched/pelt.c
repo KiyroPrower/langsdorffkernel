@@ -512,8 +512,13 @@ int update_irq_load_avg(struct rq *rq, u64 running)
 
 DEFINE_PER_CPU(u64, clock_task_mult);
 
-unsigned int sysctl_sched_pelt_multiplier = 1;
-__read_mostly unsigned int sched_pelt_lshift;
+/*
+ * Default 2x (16 ms half-life): load ramps twice as fast, so frequency
+ * follows sudden game/UI load sooner. Must match sched_pelt_lshift
+ * (multiplier >> 1); 1 restores the 32 ms default at runtime.
+ */
+unsigned int sysctl_sched_pelt_multiplier = 2;
+__read_mostly unsigned int sched_pelt_lshift = 1;
 
 int sched_pelt_multiplier(struct ctl_table *table, int write, void *buffer,
 			  size_t *lenp, loff_t *ppos)
