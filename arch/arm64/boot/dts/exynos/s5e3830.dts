@@ -2701,6 +2701,10 @@
 	set@0300 {
 		phandle = <0x65>;
 
+		freqboost {
+			top-app = <0x05 0x05>;
+		};
+
 		frt {
 			active-ratio = <0x32 0x64>;
 		};
@@ -2709,7 +2713,6 @@
 		};
 
 		ecs_dynamic {
-			dynamic-busy-ratio = <0x46>;
 		};
 
 		cpus_binding {
@@ -2725,7 +2728,7 @@
 		};
 
 		cpufreq_gov {
-			htask-boost = <0x32 0x32>;
+			htask-boost = <0x96 0x96>;
 		};
 	};
 
