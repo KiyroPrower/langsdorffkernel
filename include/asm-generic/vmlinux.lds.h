@@ -1185,6 +1185,39 @@
  * matches the requirement of PAGE_ALIGNED_DATA.
  *
  * use 0 as page_align if page_aligned data is not used */
+#ifdef CONFIG_PGO_CLANG
+#define PGO_CLANG_DATA							\
+	__llvm_prf_data : AT(ADDR(__llvm_prf_data) - LOAD_OFFSET) {	\
+		__llvm_prf_start = .;					\
+		__llvm_prf_data_start = .;				\
+		*(__llvm_prf_data)					\
+		__llvm_prf_data_end = .;				\
+	}								\
+	__llvm_prf_cnts : AT(ADDR(__llvm_prf_cnts) - LOAD_OFFSET) {	\
+		__llvm_prf_cnts_start = .;				\
+		*(__llvm_prf_cnts)					\
+		__llvm_prf_cnts_end = .;				\
+	}								\
+	__llvm_prf_names : AT(ADDR(__llvm_prf_names) - LOAD_OFFSET) {	\
+		__llvm_prf_names_start = .;				\
+		*(__llvm_prf_names)					\
+		__llvm_prf_names_end = .;				\
+	}								\
+	__llvm_prf_vals : AT(ADDR(__llvm_prf_vals) - LOAD_OFFSET) {	\
+		__llvm_prf_vals_start = .;				\
+		*(__llvm_prf_vals)					\
+		__llvm_prf_vals_end = .;				\
+	}								\
+	__llvm_prf_vnds : AT(ADDR(__llvm_prf_vnds) - LOAD_OFFSET) {	\
+		__llvm_prf_vnds_start = .;				\
+		*(__llvm_prf_vnds)					\
+		__llvm_prf_vnds_end = .;				\
+		__llvm_prf_end = .;					\
+	}
+#else
+#define PGO_CLANG_DATA
+#endif
+
 #define RW_DATA(cacheline, pagealigned, inittask)			\
 	. = ALIGN(PAGE_SIZE);						\
 	.data : AT(ADDR(.data) - LOAD_OFFSET) {				\
@@ -1197,6 +1230,7 @@
 		CONSTRUCTORS						\
 	}								\
 	BUG_TABLE							\
+	PGO_CLANG_DATA
 
 #define INIT_TEXT_SECTION(inittext_align)				\
 	. = ALIGN(inittext_align);					\
