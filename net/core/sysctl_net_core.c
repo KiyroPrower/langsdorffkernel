@@ -654,6 +654,8 @@ static __net_initdata struct pernet_operations sysctl_core_ops = {
 
 static __init int sysctl_core_init(void)
 {
+	/* order-3 page_frag refills wake kswapd/kcompactd on fragmented 3.7 GB RAM; use order-0 */
+	static_branch_enable(&net_high_order_alloc_disable_key);
 	register_net_sysctl(&init_net, "net/core", net_core_table);
 	return register_pernet_subsys(&sysctl_core_ops);
 }

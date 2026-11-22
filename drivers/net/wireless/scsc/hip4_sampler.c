@@ -48,7 +48,7 @@ static atomic_t in_read;
 /* It is less efficent, but we simplify the implementation */
 static DEFINE_SPINLOCK(g_spinlock);
 
-static bool hip4_sampler_enable = true;
+static bool hip4_sampler_enable;
 module_param(hip4_sampler_enable, bool, S_IRUGO | S_IWUSR);
 MODULE_PARM_DESC(hip4_sampler_enable, "Enable hip4_sampler_enable. Run-time option - (default: Y)");
 
@@ -60,7 +60,7 @@ static int hip4_sampler_kfifo_len = 128 * 1024;
 module_param(hip4_sampler_kfifo_len, int, S_IRUGO | S_IWUSR);
 MODULE_PARM_DESC(hip4_sampler_kfifo_len, "Streaming fifo buffer length in num of records- default: 262144 Max: 262144. Loaded at /dev open");
 
-static int hip4_sampler_static_kfifo_len = 128 * 1024;
+static int hip4_sampler_static_kfifo_len = 1024;
 module_param(hip4_sampler_static_kfifo_len, int, S_IRUGO | S_IWUSR);
 MODULE_PARM_DESC(hip4_sampler_static_kfifo_len, "Offline fifo buffer length in num of records- default: 262144 Max: 262144. Loaded at /dev open");
 
@@ -84,7 +84,7 @@ static bool hip4_sampler_sample_through = true;
 module_param(hip4_sampler_sample_through, bool, S_IRUGO | S_IWUSR);
 MODULE_PARM_DESC(hip4_sampler_sample_through, "Sample throughput. Default: Y. Run time option");
 
-static bool hip4_sampler_sample_tcp = true;
+static bool hip4_sampler_sample_tcp;
 module_param(hip4_sampler_sample_tcp, bool, S_IRUGO | S_IWUSR);
 MODULE_PARM_DESC(hip4_sampler_sample_tcp, "Sample TCP streams. Default: Y. Run time option");
 
