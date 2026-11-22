@@ -236,6 +236,8 @@ static int exynos_cpufreq_init(struct cpufreq_policy *policy)
 	policy->fast_switch_possible = domain->fast_switch;
 	policy->freq_table = domain->freq_table;
 	policy->cpuinfo.transition_latency = TRANSITION_LATENCY;
+	/* default schedutil rate_limit_us would be clamp(5000*1000,..,10000)=10 ms */
+	policy->transition_delay_us = 4000;
 	policy->dvfs_possible_from_any_cpu = true;
 	cpumask_copy(policy->cpus, &domain->cpus);
 
