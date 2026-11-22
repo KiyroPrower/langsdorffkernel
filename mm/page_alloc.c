@@ -372,7 +372,7 @@ int watermark_boost_factor __read_mostly;
  */
 int watermark_boost_factor __read_mostly;
 #endif
-int watermark_scale_factor = 20;
+int watermark_scale_factor = 40;
 
 static unsigned long nr_kernel_pages __initdata;
 static unsigned long nr_all_pages __initdata;
