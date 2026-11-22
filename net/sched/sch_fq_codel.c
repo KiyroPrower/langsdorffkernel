@@ -496,7 +496,7 @@ static int fq_codel_init(struct Qdisc *sch, struct nlattr *opt,
 	int err;
 
 	sch->limit = 10*1024;
-	q->flows_cnt = 1024;
+	q->flows_cnt = 256; /* 71 mq tx queues per SCSC netdev: 1024 flows cost ~4.8 MiB each */
 	q->memory_limit = 32 << 20; /* 32 MBytes */
 	q->drop_batch_size = 64;
 	mtu = min_t(u32, psched_mtu(qdisc_dev(sch)), FQ_CODEL_QUANTUM_MAX);
