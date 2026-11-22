@@ -362,7 +362,10 @@ static int sysbusy_find_fastest_cpu(struct tp_env *env)
 	if (cpumask_empty(&mask))
 		cpu = cpumask_last(&env->cpus_allowed);
 	else
-		cpu = cpumask_any(&mask);
+		cpu = cpumask_equal(&mask, &env->cpus_allowed) ? -1 : cpumask_any(&mask);
+
+	if (cpu < 0)
+		return -1;	/* symmetric cpus: no 'fastest' cpu, use normal placement */
 
 	if (!cpu_rq(cpu)->nr_running)
 		return cpu;

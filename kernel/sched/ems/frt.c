@@ -157,6 +157,7 @@ void frt_update_available_cpus(struct rq *rq)
 		if (cpumask_empty(&active_cpus))
 			continue;
 
+		dom_util_sum = 0;
 		for_each_cpu(cpu, &active_cpus)
 			dom_util_sum += frt_cpu_util(cpu);
 
