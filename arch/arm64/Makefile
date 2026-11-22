@@ -93,7 +93,7 @@ asm-arch := armv8.3-a
 endif
 endif
 
-KBUILD_CFLAGS += $(branch-prot-flags-y)
+KBUILD_CFLAGS += $(call cc-option,-mbranch-protection=none)
 
 ifeq ($(CONFIG_AS_HAS_ARMV8_4), y)
 # make sure to pass the newest target architecture to -march.
